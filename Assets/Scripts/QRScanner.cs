@@ -14,15 +14,16 @@ public class QRScanner : MonoBehaviour
     public RectTransform scanZone;
 
     [Header("Runtime")]
-    public bool isCamAvailable;
-    public WebCamTexture cameraTexture;
-    public bool scanning;
+    bool isCamAvailable;
+    WebCamTexture cameraTexture;
 
-    [Header("Config")]
-    public string logPrefix = "[QRScanner] ";
+    // [Header("Config")]
+    string logPrefix;
 
     public void Start()
     {
+        logPrefix = "[" + Application.productName + "][" + this.name + "] ";
+
 #if UNITY_IOS || UNITY_WEBGL
         StartCoroutine(AskForPermissionIfRequired(UserAuthorization.WebCam, () => { SetUpCamera(); }));
         return;
@@ -92,8 +93,8 @@ public class QRScanner : MonoBehaviour
     void SetUpCamera()
     {
         WebCamDevice[] devices = WebCamTexture.devices;
-
         Debug.Log(logPrefix + "WebCam Devices: " + devices.Length);
+
         if (devices.Length == 0)
         {
             isCamAvailable = false;
