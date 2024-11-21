@@ -20,7 +20,7 @@ public class QRScanner : MonoBehaviour
     // [Header("Config")]
     string logPrefix;
 
-    public void Start()
+    void Start()
     {
         logPrefix = "[" + Application.productName + "][" + this.name + "] ";
 
@@ -36,7 +36,7 @@ public class QRScanner : MonoBehaviour
 #endif
         SetUpCamera();
     }
-    public void Update()
+    void Update()
     {
         UpdateCameraRender();
         Scan();
