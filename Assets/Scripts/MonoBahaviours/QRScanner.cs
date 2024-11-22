@@ -16,6 +16,7 @@ public class QRScanner : MonoBehaviour
     [Header("Runtime")]
     bool isCamAvailable;
     WebCamTexture cameraTexture;
+    bool isScanning;
 
     // [Header("Config")]
     string logPrefix;
@@ -35,11 +36,16 @@ public class QRScanner : MonoBehaviour
         }
 #endif
         SetUpCamera();
+        isScanning = true;
     }
     void Update()
     {
         UpdateCameraRender();
         Scan();
+    }
+    void OnApplicationFocus(bool focus)
+    {
+        isScanning = focus;
     }
 
 #if UNITY_IOS || UNITY_WEBGL
@@ -134,7 +140,7 @@ public class QRScanner : MonoBehaviour
 
     void Scan()
     {
-        if (!isCamAvailable) return;
+        if (!isCamAvailable || !isScanning) return;
 
         try
         {
@@ -145,6 +151,7 @@ public class QRScanner : MonoBehaviour
             {
                 // TODO: after getting result
                 Application.OpenURL(result.Text);
+                isScanning = false;
             }
         }
         catch
