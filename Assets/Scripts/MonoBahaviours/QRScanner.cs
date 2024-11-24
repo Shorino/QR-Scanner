@@ -23,7 +23,7 @@ public class QRScanner : MonoBehaviour
 
     void Start()
     {
-        logPrefix = "[" + Application.productName + "][" + this.name + "] ";
+        logPrefix = "[" + Application.productName + "][" + GetType().Name + "] ";
 
 #if UNITY_IOS || UNITY_WEBGL
         StartCoroutine(AskForPermissionIfRequired(UserAuthorization.WebCam, () => { SetUpCamera(); }));
